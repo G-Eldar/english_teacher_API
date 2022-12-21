@@ -4,6 +4,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 
 from helper import Helper
 from models import AnswerRequestBody, LetterRequestBody
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 
 # Endpoints:
 # word/guess,   word/check,    word/result
@@ -49,6 +50,10 @@ def guess_letter_check(user_answer: LetterRequestBody):
 
 
 #   =================== RUN ======================
+
+@app.get("/")
+def root():
+    return FileResponse("public/index.html")
 
 if __name__ == "__main__":
     uvicorn.run(app, port=8000)
