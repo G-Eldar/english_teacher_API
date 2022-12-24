@@ -5,6 +5,7 @@ from fastapi.responses import JSONResponse
 
 class Helper:
     def __init__(self):
+        self.score = 0
         self.question_id = 1000
         self.db = {}
 
@@ -53,6 +54,7 @@ class Helper:
     def check_answer(self, question_id, answer):
         if question_id in self.db:
             correct_answer = self.db[question_id]
+            self.score += 1
             return JSONResponse(content={"is_correct": correct_answer == answer},
                                 media_type="application/json")
         else:
@@ -63,10 +65,14 @@ class Helper:
     def get_correct_result(self, question_id):
         if question_id in self.db:
             correct_answer = self.db[question_id]
+            self.score += 1
             return JSONResponse(content={"correct_answer": correct_answer},
                                 media_type="application/json")
         else:
             return JSONResponse(status_code=400, content={"error": "entered question_id not existing"})
+
+    def score(self):
+        print(input('Input you name'), 'you score its', self.score)
 
     def get_question_id(self):
         self.question_id += 1
